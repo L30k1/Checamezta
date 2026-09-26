@@ -30,6 +30,7 @@ body {
   justify-content: space-between;
   padding: 14px 16px;
   border-bottom: 1px solid var(--panel-border);
+  background-image: linear-gradient(black, rgb(32, 6, 73));
 }
 
 .brand { display: flex; align-items: center; gap: 8px; }
@@ -44,7 +45,9 @@ body {
   border-radius: 999px;
   font-weight: 600;
 }
-
+#imglogo{
+  height: 35px;
+}
 .panel { padding: 16px; display: flex; flex-direction: column; gap: 14px; }
 
 .status-row {
