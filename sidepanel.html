@@ -21,44 +21,22 @@
       </svg>
       <span class="brand-name">VeriSource AI</span>
     </div>
-    <button id="settingsBtn" class="icon-btn" title="Configuración" aria-label="Configuración">
-      <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="1.8">
-        <circle cx="12" cy="12" r="3"/>
-        <path d="M19.4 15a1.7 1.7 0 00.3 1.9l.1.1a2 2 0 11-2.9 2.9l-.1-.1a1.7 1.7 0 00-1.9-.3 1.7 1.7 0 00-1 1.6V21a2 2 0 11-4 0v-.1a1.7 1.7 0 00-1-1.6 1.7 1.7 0 00-1.9.3l-.1.1a2 2 0 11-2.9-2.9l.1-.1a1.7 1.7 0 00.3-1.9 1.7 1.7 0 00-1.6-1H3a2 2 0 110-4h.1a1.7 1.7 0 001.6-1 1.7 1.7 0 00-.3-1.9l-.1-.1a2 2 0 112.9-2.9l.1.1a1.7 1.7 0 001.9.3H9.4A1.7 1.7 0 0011 3.6V3a2 2 0 114 0v.1a1.7 1.7 0 001 1.6 1.7 1.7 0 001.9-.3l.1-.1a2 2 0 112.9 2.9l-.1.1a1.7 1.7 0 00-.3 1.9V9a1.7 1.7 0 001.6 1H21a2 2 0 110 4h-.1a1.7 1.7 0 00-1.6 1z"/>
-      </svg>
-    </button>
+    <span class="local-tag">100% local</span>
   </header>
 
   <main class="panel">
-
-    <section id="settingsPanel" class="settings-panel hidden">
-      <h3>Configuración</h3>
-      <label for="apiKeyInput">API key de Anthropic</label>
-      <input type="password" id="apiKeyInput" placeholder="sk-ant-..." autocomplete="off" />
-      <label for="modelSelect">Modelo</label>
-      <select id="modelSelect">
-        <option value="claude-sonnet-5">Claude Sonnet 5 (recomendado)</option>
-        <option value="claude-haiku-4-5-20251001">Claude Haiku 4.5 (más rápido y económico)</option>
-      </select>
-      <label class="checkbox-row">
-        <input type="checkbox" id="webSearchToggle" checked />
-        <span>Usar búsqueda web para contrastar datos (recomendado)</span>
-      </label>
-      <button id="saveSettingsBtn" class="btn btn-primary">Guardar</button>
-      <p class="settings-note">Tu API key se guarda solo en este navegador y se envía directamente a Anthropic al analizar una página.</p>
-    </section>
 
     <div id="statusRow" class="status-row">
       <span class="dot dot-idle"></span>
       <span id="statusText">Listo</span>
     </div>
 
-    <button id="verifyBtn" class="btn btn-primary btn-block">Verificar esta fuente</button>
+    <button id="verifyBtn" class="btn btn-primary btn-block">Analizar esta página</button>
 
     <div id="resultArea" class="result-area hidden">
 
       <section id="verdictCard" class="card verdict-card">
-        <p class="eyebrow">Veredicto final</p>
+        <p class="eyebrow">Estimación heurística</p>
         <div class="verdict-body">
           <div id="verdictIcon" class="verdict-icon"></div>
           <div>
@@ -77,7 +55,7 @@
           <p id="emotionalityValue" class="badge-value">—</p>
         </div>
         <div class="card badge-card badge-amber">
-          <p class="badge-title">⚠ Sesgo</p>
+          <p class="badge-title">⚠ Lenguaje sesgado</p>
           <p id="biasValue" class="badge-value">—</p>
         </div>
       </div>
@@ -88,7 +66,7 @@
           <p id="authorValue" class="badge-value">—</p>
         </div>
         <div class="card badge-card badge-indigo">
-          <p class="badge-title">📄 Fuentes primarias</p>
+          <p class="badge-title">📄 Fuentes reconocibles</p>
           <p id="sourcesCountValue" class="badge-value">—</p>
         </div>
       </div>
@@ -99,17 +77,18 @@
       </section>
 
       <section class="card">
-        <p class="section-title">Fuentes primarias encontradas</p>
+        <p class="section-title">Enlaces a fuentes reconocibles encontrados en la página</p>
         <ul id="sourcesList" class="sources-list"></ul>
       </section>
 
-      <p class="disclaimer">Evaluación estimada por IA a partir del contenido de la página y una búsqueda web de contraste. No sustituye la verificación profesional.</p>
+      <p class="disclaimer">Esto es una estimación automática basada en patrones del texto (lenguaje, presencia de autor, enlaces a dominios reconocibles). No verifica hechos ni sustituye el juicio humano o el fact-checking profesional.</p>
     </div>
 
     <div id="errorArea" class="error-area hidden"></div>
 
   </main>
 
+  <script src="analyzer.js"></script>
   <script src="sidepanel.js"></script>
 </body>
 </html>

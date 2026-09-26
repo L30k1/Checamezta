@@ -1,8 +1,8 @@
 {
   "manifest_version": 3,
-  "name": "VeriSource AI",
-  "version": "1.0.0",
-  "description": "Analiza con IA la fiabilidad, el sesgo y el tono emocional de la página que estás leyendo.",
+  "name": "VeriSource AI (Local)",
+  "version": "2.0.0",
+  "description": "Analiza la fiabilidad, el sesgo y el tono emocional de una página con un motor de heurísticas 100% local. Sin API keys, sin costos, sin enviar datos a ningún servidor.",
   "action": {
     "default_title": "Abrir VeriSource AI"
   },
@@ -12,6 +12,6 @@
   "background": {
     "service_worker": "background.js"
   },
-  "permissions": ["sidePanel", "activeTab", "scripting", "storage"],
-  "host_permissions": ["https://api.anthropic.com/*", "<all_urls>"]
+  "permissions": ["sidePanel", "activeTab", "scripting"],
+  "host_permissions": ["<all_urls>"]
 }

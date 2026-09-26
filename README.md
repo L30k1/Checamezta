@@ -1,45 +1,48 @@
-# VeriSource AI — extensión de Chrome
+# VeriSource AI (Local) — extensión de Chrome
 
-Analiza con IA la fiabilidad, el sesgo y el tono emocional de cualquier página, usando tu propia API key de Anthropic (Claude), con búsqueda web activada para contrastar datos.
+Versión 100% local: sin API keys, sin costos, sin enviar ningún dato a servidores externos. Todo el análisis corre en tu propio navegador con un motor de heurísticas en JavaScript.
 
 ## Instalación (modo desarrollador)
 
 1. Descomprime esta carpeta en tu equipo.
-2. Abre Chrome (o Edge/Brave) y ve a `chrome://extensions`.
-3. Activa **"Modo de desarrollador"** (interruptor arriba a la derecha).
+2. Ve a `chrome://extensions`.
+3. Activa **"Modo de desarrollador"** (arriba a la derecha).
 4. Haz clic en **"Cargar descomprimida"** y selecciona la carpeta `verisource-extension`.
-5. Fija la extensión en la barra (ícono del pin) para acceder rápido.
-
-## Configurar tu API key
-
-1. Consigue una API key en https://console.anthropic.com (sección "API Keys").
-2. Haz clic en el ícono de la extensión → se abre el panel lateral.
-3. Pulsa el ícono de engranaje (⚙) arriba a la derecha.
-4. Pega tu API key, elige el modelo y guarda.
-
-La key se guarda solo en tu navegador (`chrome.storage.local`) y se envía directamente a la API de Anthropic al pulsar "Verificar esta fuente" — no pasa por ningún servidor intermedio.
+5. Fija la extensión en la barra para acceder rápido.
 
 ## Uso
 
-1. Abre cualquier artículo o página que quieras evaluar.
+1. Abre cualquier página o artículo.
 2. Abre el panel lateral de VeriSource AI.
-3. Pulsa **"Verificar esta fuente"**.
-4. La extensión toma el título, la URL, la descripción y el texto visible de la página, se lo envía a Claude (con búsqueda web para contrastar afirmaciones) y muestra:
-   - Veredicto final y nivel de confianza
-   - Emocionalidad y sesgo detectados
-   - Si hay un autor identificado
-   - Fuentes primarias encontradas, con enlaces
-   - Un resumen del análisis integrado
+3. Pulsa **"Analizar esta página"**.
+4. Verás una tarjeta con:
+   - Puntuación heurística estimada (0-100)
+   - Emocionalidad / lenguaje sensacionalista detectado
+   - Presencia de lenguaje absolutista ("siempre", "nunca", "sin duda", etc.)
+   - Si hay un autor identificable en la página
+   - Enlaces salientes hacia dominios comúnmente reconocidos como fuentes primarias (organismos oficiales, revistas científicas, medios establecidos, etc.)
+   - Un resumen en texto de todo lo anterior
 
-## Importante
+## Cómo funciona el motor (`analyzer.js`)
 
-- Esto es una **evaluación heurística generada por IA**, no un fact-checking certificado. Úsala como punto de partida, no como veredicto final.
-- El análisis consume tokens de tu cuenta de Anthropic (se factura según tu plan/API key).
-- Si activas la búsqueda web (recomendado, activada por defecto), el modelo puede tardar unos segundos más en responder.
-- Puedes cambiar entre Claude Sonnet 5 (más preciso) y Claude Haiku 4.5 (más rápido/económico) en configuración.
+No usa ninguna IA generativa ni llama a ningún servidor. Es un conjunto de reglas:
+
+- **Emocionalidad**: cuenta frases y palabras típicas del lenguaje sensacionalista/clickbait, palabras en MAYÚSCULAS y signos de exclamación.
+- **Lenguaje sesgado**: cuenta expresiones absolutistas ("todos saben", "nunca", "100% seguro"...).
+- **Autor**: busca metaetiquetas `author`, atributos `rel="author"` o clases comunes tipo `.author`/`.byline`.
+- **Fuentes reconocibles**: revisa todos los enlaces salientes de la página y los compara contra una lista fija de dominios (organismos de salud, ciencia, medios reconocidos, etc.). Si no hay coincidencias, no inventa ninguna.
+- **Puntuación final**: combina todo lo anterior con pesos fijos definidos en el código. Es completamente transparente — puedes abrir `analyzer.js` y ver exactamente cómo se calcula cada número.
+
+## Límites importantes (léelo antes de confiar en los resultados)
+
+- **No verifica hechos.** No sabe si una afirmación es verdadera o falsa; solo detecta patrones de superficie en el texto y los enlaces.
+- **La lista de "dominios reconocidos" es fija y limitada.** Un sitio fiable que no esté en la lista aparecerá con "0 fuentes detectadas", y eso no significa que sea poco confiable.
+- **Es fácil de engañar** por alguien que conozca las reglas (por ejemplo, evitando palabras sensacionalistas a propósito).
+- Trátalo como una primera señal de alerta, no como un veredicto. Para temas importantes, sigue verificando con fuentes primarias y/o fact-checkers profesionales.
 
 ## Archivos del proyecto
 
 - `manifest.json` — configuración de la extensión (Manifest V3)
 - `background.js` — abre el panel lateral al hacer clic en el ícono
-- `sidepanel.html` / `sidepanel.css` / `sidepanel.js` — interfaz y lógica de análisis
+- `analyzer.js` — el motor de heurísticas (la "IA" local)
+- `sidepanel.html` / `sidepanel.css` / `sidepanel.js` — interfaz y orquestación
