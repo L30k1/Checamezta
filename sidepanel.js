@@ -1,8 +1,10 @@
 const statusDot = document.querySelector("#statusRow .dot");
 const statusText = document.getElementById("statusText");
 const verifyBtn = document.getElementById("verifyBtn");
+const aiVerifyBtn = document.getElementById("aiVerifyBtn");
 const resultArea = document.getElementById("resultArea");
 const errorArea = document.getElementById("errorArea");
+const engineTag = document.getElementById("engineTag");
 
 function setStatus(kind, label) {
   statusDot.className = `dot dot-${kind}`;
@@ -79,7 +81,13 @@ function iconSvg(kind) {
   return `<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4"><path d="M6 6l12 12M18 6L6 18"/></svg>`;
 }
 
-function renderResult(result) {
+function renderResult(result, engineLabel) {
+  if (engineLabel) {
+    engineTag.textContent = engineLabel;
+    engineTag.classList.remove("hidden");
+  } else {
+    engineTag.classList.add("hidden");
+  }
   const colors = VERDICT_COLORS[result.verdict] || VERDICT_COLORS.amber;
 
   document.getElementById("verdictCard").style.borderColor = colors.border;
@@ -129,12 +137,13 @@ verifyBtn.addEventListener("click", async () => {
   clearError();
   resultArea.classList.add("hidden");
   verifyBtn.disabled = true;
+  aiVerifyBtn.disabled = true;
   setStatus("busy", "Analizando…");
 
   try {
     const pageData = await getActivePageData();
     const result = analyzePage(pageData); // defined in analyzer.js, fully local
-    renderResult(result);
+    renderResult(result, "Motor: reglas locales (instantáneo, sin IA generativa)");
     setStatus("idle", "Listo");
   } catch (err) {
     console.error(err);
@@ -142,6 +151,31 @@ verifyBtn.addEventListener("click", async () => {
     setStatus("error", "Error");
   } finally {
     verifyBtn.disabled = false;
+    aiVerifyBtn.disabled = false;
+  }
+});
+
+aiVerifyBtn.addEventListener("click", async () => {
+  clearError();
+  resultArea.classList.add("hidden");
+  verifyBtn.disabled = true;
+  aiVerifyBtn.disabled = true;
+  setStatus("busy", "Verificando con IA…");
+
+  try {
+    const pageData = await getActivePageData();
+    const result = await verifyWithBuiltInAI(pageData, (percent) => {
+      setStatus("busy", `Descargando modelo de IA… ${percent}%`);
+    });
+    renderResult(result, "Motor: IA integrada de Chrome (Gemini Nano, en tu dispositivo)");
+    setStatus("idle", "Listo");
+  } catch (err) {
+    console.error(err);
+    showError(err.message || "Ocurrió un error inesperado con la IA integrada.");
+    setStatus("error", "Error");
+  } finally {
+    verifyBtn.disabled = false;
+    aiVerifyBtn.disabled = false;
   }
 });
 

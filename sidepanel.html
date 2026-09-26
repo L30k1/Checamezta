@@ -31,9 +31,12 @@
       <span id="statusText">Listo</span>
     </div>
 
-    <button id="verifyBtn" class="btn btn-primary btn-block">Analizar esta página</button>
+    <button id="verifyBtn" class="btn btn-primary btn-block">Analizar con reglas (instantáneo)</button>
+    <button id="aiVerifyBtn" class="btn btn-ai btn-block">✨ Verificar con IA (Chrome, gratis)</button>
+    <p class="ai-hint">Usa el modelo integrado de Chrome (Gemini Nano). Corre en tu equipo, sin costo. La primera vez puede descargar el modelo (una sola vez).</p>
 
     <div id="resultArea" class="result-area hidden">
+      <p id="engineTag" class="engine-tag hidden"></p>
 
       <section id="verdictCard" class="card verdict-card">
         <p class="eyebrow">Estimación heurística</p>
@@ -89,6 +92,7 @@
   </main>
 
   <script src="analyzer.js"></script>
+  <script src="ai-engine.js"></script>
   <script src="sidepanel.js"></script>
 </body>
 </html>
