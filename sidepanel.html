@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8" />
+<title>VeriSource AI</title>
+<link rel="stylesheet" href="sidepanel.css" />
+</head>
+<body>
+
+  <header class="topbar">
+    <div class="brand">
+      <svg class="brand-mark" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <path d="M12 2L3 6v6c0 5.2 3.8 9.7 9 11 5.2-1.3 9-5.8 9-11V6l-9-4z" fill="url(#g)"/>
+        <path d="M8.5 12.2l2.3 2.3 4.7-4.9" stroke="white" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/>
+        <defs>
+          <linearGradient id="g" x1="3" y1="2" x2="21" y2="22" gradientUnits="userSpaceOnUse">
+            <stop stop-color="#7B6CFF"/>
+            <stop offset="1" stop-color="#4E3FD9"/>
+          </linearGradient>
+        </defs>
+      </svg>
+      <span class="brand-name">VeriSource AI</span>
+    </div>
+    <button id="settingsBtn" class="icon-btn" title="Configuración" aria-label="Configuración">
+      <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="1.8">
+        <circle cx="12" cy="12" r="3"/>
+        <path d="M19.4 15a1.7 1.7 0 00.3 1.9l.1.1a2 2 0 11-2.9 2.9l-.1-.1a1.7 1.7 0 00-1.9-.3 1.7 1.7 0 00-1 1.6V21a2 2 0 11-4 0v-.1a1.7 1.7 0 00-1-1.6 1.7 1.7 0 00-1.9.3l-.1.1a2 2 0 11-2.9-2.9l.1-.1a1.7 1.7 0 00.3-1.9 1.7 1.7 0 00-1.6-1H3a2 2 0 110-4h.1a1.7 1.7 0 001.6-1 1.7 1.7 0 00-.3-1.9l-.1-.1a2 2 0 112.9-2.9l.1.1a1.7 1.7 0 001.9.3H9.4A1.7 1.7 0 0011 3.6V3a2 2 0 114 0v.1a1.7 1.7 0 001 1.6 1.7 1.7 0 001.9-.3l.1-.1a2 2 0 112.9 2.9l-.1.1a1.7 1.7 0 00-.3 1.9V9a1.7 1.7 0 001.6 1H21a2 2 0 110 4h-.1a1.7 1.7 0 00-1.6 1z"/>
+      </svg>
+    </button>
+  </header>
+
+  <main class="panel">
+
+    <section id="settingsPanel" class="settings-panel hidden">
+      <h3>Configuración</h3>
+      <label for="apiKeyInput">API key de Anthropic</label>
+      <input type="password" id="apiKeyInput" placeholder="sk-ant-..." autocomplete="off" />
+      <label for="modelSelect">Modelo</label>
+      <select id="modelSelect">
+        <option value="claude-sonnet-5">Claude Sonnet 5 (recomendado)</option>
+        <option value="claude-haiku-4-5-20251001">Claude Haiku 4.5 (más rápido y económico)</option>
+      </select>
+      <label class="checkbox-row">
+        <input type="checkbox" id="webSearchToggle" checked />
+        <span>Usar búsqueda web para contrastar datos (recomendado)</span>
+      </label>
+      <button id="saveSettingsBtn" class="btn btn-primary">Guardar</button>
+      <p class="settings-note">Tu API key se guarda solo en este navegador y se envía directamente a Anthropic al analizar una página.</p>
+    </section>
+
+    <div id="statusRow" class="status-row">
+      <span class="dot dot-idle"></span>
+      <span id="statusText">Listo</span>
+    </div>
+
+    <button id="verifyBtn" class="btn btn-primary btn-block">Verificar esta fuente</button>
+
+    <div id="resultArea" class="result-area hidden">
+
+      <section id="verdictCard" class="card verdict-card">
+        <p class="eyebrow">Veredicto final</p>
+        <div class="verdict-body">
+          <div id="verdictIcon" class="verdict-icon"></div>
+          <div>
+            <p id="verdictLabel" class="verdict-label">—</p>
+            <p id="verdictConfidence" class="verdict-confidence"></p>
+          </div>
+        </div>
+        <div class="confidence-track">
+          <div id="confidenceFill" class="confidence-fill"></div>
+        </div>
+      </section>
+
+      <div class="badge-grid">
+        <div class="card badge-card badge-amber">
+          <p class="badge-title">🙂 Emocionalidad</p>
+          <p id="emotionalityValue" class="badge-value">—</p>
+        </div>
+        <div class="card badge-card badge-amber">
+          <p class="badge-title">⚠ Sesgo</p>
+          <p id="biasValue" class="badge-value">—</p>
+        </div>
+      </div>
+
+      <div class="badge-grid">
+        <div class="card badge-card badge-green">
+          <p class="badge-title">👤 Autor</p>
+          <p id="authorValue" class="badge-value">—</p>
+        </div>
+        <div class="card badge-card badge-indigo">
+          <p class="badge-title">📄 Fuentes primarias</p>
+          <p id="sourcesCountValue" class="badge-value">—</p>
+        </div>
+      </div>
+
+      <section class="card">
+        <p class="section-title">Análisis integrado</p>
+        <p id="analysisText" class="body-text">—</p>
+      </section>
+
+      <section class="card">
+        <p class="section-title">Fuentes primarias encontradas</p>
+        <ul id="sourcesList" class="sources-list"></ul>
+      </section>
+
+      <p class="disclaimer">Evaluación estimada por IA a partir del contenido de la página y una búsqueda web de contraste. No sustituye la verificación profesional.</p>
+    </div>
+
+    <div id="errorArea" class="error-area hidden"></div>
+
+  </main>
+
+  <script src="sidepanel.js"></script>
+</body>
+</html>
