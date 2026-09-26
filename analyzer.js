@@ -23,8 +23,8 @@ const RECOGNIZED_SOURCE_DOMAINS = [
   "cdc.gov", "un.org", "europa.eu", "oecd.org", "worldbank.org",
   "nature.com", "sciencedirect.com", "thelancet.com", "bmj.com",
   "reuters.com", "apnews.com", "bbc.com", "bbc.co.uk", "elpais.com",
-  "nytimes.com", "wikipedia.org", "doi.org", "jamanetwork.com",
-  "sciencedirect.com", "springer.com", "gob.mx", "gov.uk",
+  "nytimes.com", "doi.org", "jamanetwork.com",
+  "sciencedirect.com", "springer.com", "gob.mx", "gov.uk", "wikipedia.org",
 ];
 
 function countMatches(text, patterns) {

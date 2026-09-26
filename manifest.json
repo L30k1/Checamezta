@@ -1,10 +1,10 @@
 {
   "manifest_version": 3,
-  "name": "VeriSource AI (Local)",
+  "name": "Chekamezta (Local)",
   "version": "2.0.0",
   "description": "Analiza la fiabilidad, el sesgo y el tono emocional de una página con un motor de heurísticas 100% local. Sin API keys, sin costos, sin enviar datos a ningún servidor.",
   "action": {
-    "default_title": "Abrir VeriSource AI"
+    "default_title": "Abrir Chekamezta"
   },
   "side_panel": {
     "default_path": "sidepanel.html"
