@@ -1,6 +1,6 @@
 # VeriSource AI (Local) — extensión de Chrome
 
-Versión 100% local: sin API keys, sin costos, sin enviar ningún dato a servidores externos. Todo el análisis corre en tu propio navegador con un motor de heurísticas en JavaScript.
+Versión 100% local: Sin enviar ningún dato a servidores externos. Todo el análisis corre en tu propio navegador con un motor de heurísticas en JavaScript.
 
 ## Instalación (modo desarrollador)
 
@@ -10,10 +10,10 @@ Versión 100% local: sin API keys, sin costos, sin enviar ningún dato a servido
 4. Haz clic en **"Cargar descomprimida"** y selecciona la carpeta `verisource-extension`.
 5. Fija la extensión en la barra para acceder rápido.
 
-## Dos motores de análisis (ambos gratis, sin API key)
+## Dos motores de análisis (ambos gratis)
 
 - **"Analizar con reglas (instantáneo)"** — motor de heurísticas en `analyzer.js`. Instantáneo, funciona en cualquier Chrome.
-- **"✨ Verificar con IA (Chrome, gratis)"** — usa la IA integrada de Chrome (Prompt API / modelo Gemini Nano). Es una IA generativa real, corre en tu propio equipo, y no cuesta nada porque no llama a ningún servidor externo.
+- **"Verificar con IA (Chrome, gratis)"** — usa la IA integrada de Chrome (Prompt API / modelo Gemini Nano). Es una IA generativa real, corre en tu propio equipo, y no cuesta nada porque no llama a ningún servidor externo.
   - Requiere **Chrome 138 o más reciente**.
   - La **primera vez** que la uses, Chrome descarga el modelo (unos cientos de MB) — verás el progreso en el panel. Después queda guardado y es instantáneo.
   - Esta IA **no tiene acceso a internet**: solo analiza el texto de la página, no puede contrastar datos contra fuentes externas como sí lo haría un servicio en la nube.
@@ -22,7 +22,7 @@ Versión 100% local: sin API keys, sin costos, sin enviar ningún dato a servido
 ## Uso
 
 1. Abre cualquier página o artículo.
-2. Abre el panel lateral de VeriSource AI.
+2. Abre el panel lateral de Chekamela.
 3. Pulsa **"Analizar con reglas"** o **"Verificar con IA"**, según prefieras.
 4. Verás una tarjeta con:
    - Puntuación heurística estimada (0-100)
