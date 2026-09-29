@@ -1,4 +1,4 @@
-# VeriSource AI (Local) — extensión de Chrome
+# Chekamezta - Extención
 
 Versión 100% local: Sin enviar ningún dato a servidores externos. Todo el análisis corre en tu propio navegador con un motor de heurísticas en JavaScript.
 
